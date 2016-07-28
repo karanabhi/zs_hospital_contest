@@ -1,0 +1,6 @@
+-- Converted HospitalProfiling CSV to HospitalProfiling SQL
+-- Added HospitalProfiling SQL to DB
+-- Cleaned Data of HospitalProfiling SQL to take avg Empoyee count and store in HospitalProfiling_con_avg SQL
+-- Added HospitalProfiling_conv_avg SQL to DB 
+-- Added Columns (Year Average,Year Median,Max Year,Min Year,First Quarter Sum,Second Quarter Sum,Third Quarter Sum,Fourth Quarter Sum,First Quarter Avg,	Second Quarter Avg,Third Quarter Avg,Fourth Quarter Avg,First Half Year Total,First Half Year Average,Second Half Year Total,Second Half Year Average) to HospitalRevenue CSV to make HospitalRevenue_added_cols CSV
+-- Removed "NO District Available" district_id rows from HospitalRevenue_added_cols CSV
