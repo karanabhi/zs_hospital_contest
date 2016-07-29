@@ -4,3 +4,16 @@
 -- Added HospitalProfiling_conv_avg SQL to DB 
 -- Added Columns (Year Average,Year Median,Max Year,Min Year,First Quarter Sum,Second Quarter Sum,Third Quarter Sum,Fourth Quarter Sum,First Quarter Avg,	Second Quarter Avg,Third Quarter Avg,Fourth Quarter Avg,First Half Year Total,First Half Year Average,Second Half Year Total,Second Half Year Average) to HospitalRevenue CSV to make HospitalRevenue_added_cols CSV
 -- Removed "NO District Available" district_id rows from HospitalRevenue_added_cols CSV
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Queries:
+
+Duplicate data:
+
+SELECT *,count(*) FROM `mytable` GROUP BY Hospital_ID,Region_ID,District_ID,Instrument_ID,Month_1,Month_2,Month_3,Month_4,Month_5,Month_6,Month_7,Month_8,Month_9,Month_10,Month_11,Month_12,Year_Total,Year_Average,Year_Median,Max_Year,Min_Year,First_Quarter_Sum,Second_Quarter_Sum,Third_Quarter_Sum,Fourth_Quarter_Sum,First_Quarter_Avg,Second_Quarter_Avg,Third_Quarter_Avg,Fourth_Quarter_Avg,First_Half_Year_Total,First_Half_Year_Average,Second_Half_Year_Total,Second_Half_Year_Average
+ HAVING count(*)>1 ORDER BY `Month_1` ASC
+
+Removed records with ids: 10023-20087
