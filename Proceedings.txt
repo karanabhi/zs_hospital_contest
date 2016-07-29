@@ -8,15 +8,23 @@
 -- Added Buy_or_not col to ProjectedRevenue CSV
 -- Removed "NO District Available" district_id rows from ProjectedRevenue CSV
 -- Added ProjectedRevenue_added_cols SQL to DB 
+-- Created table hospitalprofiling+revenue which contains the join of Hospital Profile and Hospital Revenue to get the Hospital_Employees with the Revenues
+-- Stored table hospitalprofiling+revenue data to hospitalprofiling+revenue CSV
+-- Added hospitalprofiling+revenue SQL to DB 
+
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Queries:
 
-Duplicate data:
+---Duplicate data:
 
 SELECT *,count(*) FROM `mytable` GROUP BY Hospital_ID,Region_ID,District_ID,Instrument_ID,Month_1,Month_2,Month_3,Month_4,Month_5,Month_6,Month_7,Month_8,Month_9,Month_10,Month_11,Month_12,Year_Total,Year_Average,Year_Median,Max_Year,Min_Year,First_Quarter_Sum,Second_Quarter_Sum,Third_Quarter_Sum,Fourth_Quarter_Sum,First_Quarter_Avg,Second_Quarter_Avg,Third_Quarter_Avg,Fourth_Quarter_Avg,First_Half_Year_Total,First_Half_Year_Average,Second_Half_Year_Total,Second_Half_Year_Average
  HAVING count(*)>1 ORDER BY `Month_1` ASC
 
 Removed records with ids: 10023-20087
+
+--- Hospital Profile and Hospital Revenue join
+
+select hr.Hospital_ID,hr.Region_ID,hr.District_ID,hr.Instrument_ID,Month_1,Month_2,Month_3,Month_4,Month_5,Month_6,Month_7,Month_8,Month_9,Month_10,Month_11,Month_12,Year_Total,Year_Average,Year_Median,Max_Year,Min_Year,First_Quarter_Sum,Second_Quarter_Sum,Third_Quarter_Sum,Fourth_Quarter_Sum,First_Quarter_Avg,Second_Quarter_Avg,Third_Quarter_Avg,Fourth_Quarter_Avg,First_Half_Year_Total,First_Half_Year_Average,Second_Half_Year_Total,Second_Half_Year_Average,hp.Hospital_employees from hospitalprofiling_conv_avg hp,hospitalrevenue_added_cols hr where hr.Hospital_ID=hp.Hospital_ID and hr.District_ID=hp.District_ID
