@@ -12,13 +12,11 @@
 -- Stored table hospitalprofiling+revenue data to hospitalprofiling+revenue CSV
 -- Added hospitalprofiling+revenue SQL to DB 
 -- Checked for duplicates in hospitalprofiling+revenue table, none found :)
--- 
-
-
-
-
-
-
+-- Created projectedrevenue_added_cols CSV by adding Buy_or_not as 1
+-- Created hospitalprofiling_projectedrevenue CSV by joining projectedrevenue_added_cols & hospitalprofiling+revenue
+-- Created hospitalprofiling_minus_revenue CSV by subtracting hospitalprofiling_projectedrevenue from hospitalprofiling+revenue
+-- Created dataset CSV by combining 2 CSV files i.e [hospitalprofiling_projectedrevenue & hospitalprofiling_minus_revenue]
+*** Assuming the hospitalprofiling_minus_revenue CSV has the not sold ones as they were not found to have the predicted values when we created hospitalprofiling_projectedrevenue***
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Queries:
@@ -39,7 +37,7 @@ select hr.Hospital_ID,hr.Region_ID,hr.District_ID,hr.Instrument_ID,Month_1,Month
 select hpr.Hospital_ID,hpr.Region_ID,hpr.District_ID,hpr.Instrument_ID,Month_1,Month_2,Month_3,Month_4,Month_5,Month_6,Month_7,Month_8,Month_9,Month_10,Month_11,Month_12,Year_Total,Year_Average,Year_Median,Max_Year,Min_Year,First_Quarter_Sum,Second_Quarter_Sum,Third_Quarter_Sum,Fourth_Quarter_Sum,First_Quarter_Avg,Second_Quarter_Avg,Third_Quarter_Avg,Fourth_Quarter_Avg,First_Half_Year_Total,First_Half_Year_Average,Second_Half_Year_Total,Second_Half_Year_Average,Hospital_employees,Annual_Projected_Revenue,Buy_or_not from `hospitalprofiling+revenue` hpr,projectedrevenue_added_cols pr where hpr.Hospital_ID=pr.Hospital_ID and hpr.District_ID=pr.District_ID and hpr.Instrument_ID=pr.Instrument_ID
 
 
---- projectedrevenue_added_cols - hospitalprofiling_projectedrevenue [Sold instruments, but not in my inventory]
+--- *** projectedrevenue_added_cols - hospitalprofiling_projectedrevenue [Sold instruments, but not in my inventory] ***
 
 select Hospital_ID,District_ID,Instrument_ID from projectedrevenue_added_cols pra where not exists (select Hospital_ID,District_ID,Instrument_ID from hospitalprofiling_projectedrevenue hppr where pra.Hospital_ID=hppr.Hospital_ID and pra.District_ID=hppr.District_ID and pra.Instrument_ID=hppr.Instrument_ID)
 
@@ -47,5 +45,15 @@ select Hospital_ID,District_ID,Instrument_ID from projectedrevenue_added_cols pr
 
 select pra.Hospital_ID,pra.District_ID,pra.Instrument_ID,Month_1,Month_2,Month_3,Month_4,Month_5,Month_6,Month_7,Month_8,Month_9,Month_10,Month_11,Month_12,Year_Total,Year_Average,Year_Median,Max_Year,Min_Year,First_Quarter_Sum,Second_Quarter_Sum,Third_Quarter_Sum,Fourth_Quarter_Sum,First_Quarter_Avg,Second_Quarter_Avg,Third_Quarter_Avg,Fourth_Quarter_Avg,First_Half_Year_Total,First_Half_Year_Average,Second_Half_Year_Total,Second_Half_Year_Average,Hospital_employees from `hospitalprofiling+revenue` pra where not exists (select Hospital_ID,District_ID,Instrument_ID from 	projectedrevenue_added_cols hppr where pra.Hospital_ID=hppr.Hospital_ID and pra.District_ID=hppr.District_ID and pra.Instrument_ID=hppr.Instrument_ID)
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@Buy_or_not
+
+-- Based on CorrPlot-1, removing Min _Year & Hospital_employees Column [Terribly low correlation]; removing First.Quarter.Sum,Second.Quarter.Sum,Third.Quarter.Sum,Fourth.Quarter.Sum,Second.Half.Year.Total,Year.Total Columns since same correlation as their Average counterparts hence, created ds1.csv
+
+--Normalized ds1 by recentering.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
